@@ -17,6 +17,7 @@ var stringCounter = "0000";
 for (var i = 0; i < cpfs.length; i++) {
     var convertCounter = new String(counter);
     var replaceString = stringCounter.substring(0, stringCounter.length - convertCounter.length) + convertCounter;
+    
     if(cpfs[i].length > 11){
         continue;
     }
