@@ -8,6 +8,7 @@ var loadFile = fs.readFileSync('cpfs.csv', 'utf8', function (err, dt) {
     }
 });
 
+// cpfs array to hold all cpfs
 var cpfs = loadFile.split('\r\n');
 var jsonObject = "";
 var counter = 1;
