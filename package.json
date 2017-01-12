@@ -1,0 +1,11 @@
+{
+  "name": "jsonoutput",
+  "version": "1.0.0",
+  "description": "JSON Output",
+  "main": "output.js",
+  "scripts": {
+    "test": "mocha -t 0 test --recursive --watch"
+  },
+  "author": "Luciano Daher",
+  "license": "ISC"
+}
