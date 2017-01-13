@@ -9,7 +9,7 @@ var loadFile = fs.readFileSync('cpfs.csv', 'utf8', function (err, dt) {
     }
 });
 
-var jsonObject = {items: []};
+var jsonObject = {objects: []};
 var counter = 1;
 var stringCounter = "0000";
 var cpfs = loadFile.split(endOfLine);
@@ -22,7 +22,7 @@ for (var i = 0; i < cpfs.length; i++) {
     var numberToString = new String(counter);
     var replacedNumber = stringCounter.substring(0, stringCounter.length - numberToString.length) + numberToString;
 
-    jsonObject.items.push({
+    jsonObject.objects.push({
         cpf: cpfs[i], 
         token: replacedNumber, 
         timestamp: 494511390, 
