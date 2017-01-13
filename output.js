@@ -1,5 +1,4 @@
 var fs = require('fs');
-var StringBuilder = require('stringbuilder');
 const endOfLine = require('os').EOL;
 
 var loadFile = fs.readFileSync('cpfs.csv', 'utf8', function (err, dt) {
@@ -10,14 +9,11 @@ var loadFile = fs.readFileSync('cpfs.csv', 'utf8', function (err, dt) {
     }
 });
 
-StringBuilder.extend('string');
-
-var jsonObject = new StringBuilder();
+var jsonObject = {items: []};
 var counter = 1;
 var stringCounter = "0000";
 var cpfs = loadFile.split(endOfLine);
 
-jsonObject.appendLine('{"item":[');
 for (var i = 0; i < cpfs.length; i++) {
     if(cpfs[i].length > 11){
         continue;
@@ -26,19 +22,14 @@ for (var i = 0; i < cpfs.length; i++) {
     var numberToString = new String(counter);
     var replacedNumber = stringCounter.substring(0, stringCounter.length - numberToString.length) + numberToString;
 
-    jsonObject.append('{"cpf": "' + cpfs[i] + '", "token": "' + replacedNumber + '", "timestamp": 494511390, "uuid": "TESTSESSION-' + replacedNumber + '"}');
+    jsonObject.items.push({
+        cpf: cpfs[i], 
+        token: replacedNumber, 
+        timestamp: 494511390, 
+        uuid: "TESTSESSION-" + replacedNumber}
+        );
 
-    if (i != cpfs.length - 1) {
-        jsonObject.append(', ');
-    }
-
-    jsonObject.appendLine();
-    
     counter++;
 }
-jsonObject.appendLine(']}');
 
-var writeStream = fs.createWriteStream("json-converted.json");
-
-jsonObject.pipe(writeStream);
-jsonObject.flush();
+fs.writeFileSync('json-converted.json', JSON.stringify(jsonObject, null, 4), 'utf8');
