@@ -1,5 +1,6 @@
 var fs = require('fs');
 var StringBuilder = require('stringbuilder');
+var endOfLine = require('os').EOL;
 
 var loadFile = fs.readFileSync('cpfs.csv', 'utf8', function (err, dt) {
     if (err) {
@@ -9,13 +10,14 @@ var loadFile = fs.readFileSync('cpfs.csv', 'utf8', function (err, dt) {
     }
 });
 
-var jsonObject = "";
+StringBuilder.extend('string');
+
+var jsonObject = new StringBuilder();
 var counter = 1;
 var stringCounter = "0000";
-// cpfs array to hold all cpfs
-var cpfs = loadFile.split('\r\n');
+var cpfs = loadFile.split(endOfLine);
 
-jsonObject = jsonObject + '{"item":[';
+jsonObject.appendLine('{"item":[');
 for (var i = 0; i < cpfs.length; i++) {
     if(cpfs[i].length > 11){
         continue;
@@ -24,16 +26,19 @@ for (var i = 0; i < cpfs.length; i++) {
     var numberToString = new String(counter);
     var replacedNumber = stringCounter.substring(0, stringCounter.length - numberToString.length) + numberToString;
 
-    jsonObject = jsonObject + '{"cpf": "' + cpfs[i] + '", "token": "' + replacedNumber + '", "timestamp": 494511390, "uuid": "TESTSESSION-' + replacedNumber + '"}';
+    jsonObject.append('{"cpf": "' + cpfs[i] + '", "token": "' + replacedNumber + '", "timestamp": 494511390, "uuid": "TESTSESSION-' + replacedNumber + '"}');
 
     if (i != cpfs.length - 1) {
-        jsonObject = jsonObject + ', ';
+        jsonObject.append(', ');
     }
+
+    jsonObject.appendLine();
     
     counter++;
 }
-jsonObject = jsonObject + ']}';
+jsonObject.appendLine(']}');
 
-console.log(jsonObject.toString());
+var writeStream = fs.createWriteStream("json-converted.json");
 
-fs.writeFileSync("json-converted.json", jsonObject.toString());
+jsonObject.pipe(writeStream);
+jsonObject.flush();
