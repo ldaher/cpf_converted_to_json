@@ -1,6 +1,6 @@
 var fs = require('fs');
 var StringBuilder = require('stringbuilder');
-var endOfLine = require('os').EOL;
+const endOfLine = require('os').EOL;
 
 var loadFile = fs.readFileSync('cpfs.csv', 'utf8', function (err, dt) {
     if (err) {
