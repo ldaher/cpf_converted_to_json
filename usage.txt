@@ -1,0 +1,5 @@
+Usage: node output.js [options] 
+
+Options:
+  -s, --source file     CPFs source list file
+  -o, --output file     JSON output file name

@@ -23,11 +23,11 @@ for (var i = 0; i < cpfs.length; i++) {
     var replacedNumber = stringCounter.substring(0, stringCounter.length - numberToString.length) + numberToString;
 
     jsonObject.objects.push({
-        cpf: cpfs[i], 
-        token: replacedNumber, 
-        timestamp: 494511390, 
-        uuid: "TESTSESSION-" + replacedNumber}
-        );
+        cpf: {"S": cpfs[i]}, 
+        token: {"S": replacedNumber}, 
+        timestamp: {"N": 494511390}, 
+        uuid: {"S":"TESTSESSION-" + replacedNumber}
+    });
 
     counter++;
 }
